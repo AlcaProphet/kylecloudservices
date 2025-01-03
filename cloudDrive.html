@@ -4,108 +4,86 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>R2 File Manager</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
 </head>
 <body>
-  <div class="container mt-5">
-    <h1 class="text-center">R2 File Manager</h1>
-    <table class="table table-bordered table-striped mt-4">
-      <thead>
-        <tr>
-          <th>File Name</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody id="fileTable">
-        <!-- Rows will be dynamically added here -->
-      </tbody>
-    </table>
+  <div class="container mt-4">
+    <h1 class="mb-4">R2 File Manager</h1>
+    <div id="file-list" class="list-group">
+      <!-- File list will be populated here -->
+    </div>
   </div>
 
   <script>
+    // Function to fetch and display files
     async function fetchFiles() {
       try {
-        // Fetch the JSON data from the Worker
-        const response = await axios.get('https://drivequerylist.kylecloudservices.com/'); // Replace with your Worker URL
-        const files = response.data;
+        const response = await fetch("https://drivequerylist.kylecloudservices.com", {
+          method: "GET",
+          headers: {
+            "Access-Control-Allow-Origin": "*", // CORS header
+          },
+        });
+        
+        if (!response.ok) {
+          throw new Error("Failed to fetch files");
+        }
 
-        const fileTable = document.getElementById('fileTable');
-        fileTable.innerHTML = ''; // Clear existing rows
+        const files = await response.json();
 
-        files.forEach(file => {
-          const row = document.createElement('tr');
+        const fileList = document.getElementById("file-list");
+        fileList.innerHTML = ""; // Clear existing items
 
-          // File Name Column
-          const nameCell = document.createElement('td');
-          nameCell.textContent = file.key;
-          row.appendChild(nameCell);
+        files.forEach((file) => {
+          const fileItem = document.createElement("div");
+          fileItem.className = "list-group-item d-flex justify-content-between align-items-center";
 
-          // Actions Column
-          const actionCell = document.createElement('td');
-
-          // Download Button
-          const downloadButton = document.createElement('button');
-          downloadButton.className = 'btn btn-primary btn-sm me-2';
-          downloadButton.textContent = 'Download';
-          downloadButton.onclick = () => downloadFile(file.key);
-          actionCell.appendChild(downloadButton);
-
-          // Delete Button
-          const deleteButton = document.createElement('button');
-          deleteButton.className = 'btn btn-danger btn-sm';
-          deleteButton.textContent = 'Delete';
-          deleteButton.onclick = () => deleteFile(file.key);
-          actionCell.appendChild(deleteButton);
-
-          row.appendChild(actionCell);
-          fileTable.appendChild(row);
+          fileItem.innerHTML = `
+            <div>
+              <strong>${file.key}</strong>
+              <small class="text-muted ms-3">Size: ${file.size} bytes</small>
+            </div>
+            <div>
+              <a href="https://your-r2-bucket-url/${file.key}" class="btn btn-primary btn-sm" target="_blank">Download</a>
+              <button class="btn btn-danger btn-sm ms-2" onclick="deleteFile('${file.key}')">Delete</button>
+            </div>
+          `;
+          fileList.appendChild(fileItem);
         });
       } catch (error) {
-        console.error('Error fetching files:', error);
-        alert('Failed to load files. Please check the console for details.');
+        console.error("Error fetching files:", error);
       }
     }
 
-    async function downloadFile(fileName) {
-      try {
-        const response = await axios.get(`https://driveworker.kylecloudservices.com/${fileName}`, {
-          responseType: 'blob', // Ensure the response is treated as a file
-        });
+    // Function to delete a file
+    async function deleteFile(key) {
+      if (confirm(`Are you sure you want to delete "${key}"?`)) {
+        try {
+          const response = await fetch(`https://your-worker-url/${key}`, {
+            method: "DELETE",
+            headers: {
+              "Access-Control-Allow-Origin": "*", // CORS header
+            },
+          });
 
-        // Create a download link and trigger it
-        const url = window.URL.createObjectURL(new Blob([response.data]));
-        const link = document.createElement('a');
-        link.href = url;
-        link.setAttribute('download', fileName);
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-
-      } catch (error) {
-        console.error('Error downloading file:', error);
-        alert('Failed to download the file. Please check the console for details.');
+          if (response.ok) {
+            alert("File deleted successfully");
+            fetchFiles(); // Refresh file list
+          } else {
+            throw new Error("Failed to delete file");
+          }
+        } catch (error) {
+          console.error("Error deleting file:", error);
+          alert("Failed to delete the file.");
+        }
       }
     }
 
-    async function deleteFile(fileName) {
-      try {
-        const confirmDelete = confirm(`Are you sure you want to delete ${fileName}?`);
-        if (!confirmDelete) return;
-
-        await axios.delete(`https://driveworker.kylecloudservices.com/${fileName}`); // Replace with DELETE endpoint URL
-        alert(`${fileName} has been deleted.`);
-
-        // Refresh the file list
-        fetchFiles();
-      } catch (error) {
-        console.error('Error deleting file:', error);
-        alert('Failed to delete the file. Please check the console for details.');
-      }
-    }
-
-    // Fetch and display files on page load
-    fetchFiles();
+    // Fetch files on page load
+    document.addEventListener("DOMContentLoaded", fetchFiles);
   </script>
 </body>
 </html>
