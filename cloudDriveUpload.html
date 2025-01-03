@@ -82,10 +82,10 @@
         // Function to download a file
         async function downloadFile(fileKey) {
             try {
-                const response = await fetch(`${workerBaseUrl}/${fileKey}`, {
+                const response = await fetch(`https://driveworker.kylecloudservices.com/${fileKey}`, {
                     method: 'GET',
                     headers: {
-                        'X-Custom-Auth-Key': AUTH_SECRET_KEY
+                        'X-Custom-Auth-Key': Q8FApmel5R9bDtw6nrvL9y4J8JcRHbny
                     }
                 });
 
@@ -110,10 +110,10 @@
             if (!confirmation) return;
 
             try {
-                const response = await fetch(`${workerBaseUrl}/${fileKey}`, {
+                const response = await fetch(`https://driveworker.kylecloudservices.com/${fileKey}`, {
                     method: 'DELETE',
                     headers: {
-                        'X-Custom-Auth-Key': AUTH_SECRET_KEY
+                        'X-Custom-Auth-Key': Q8FApmel5R9bDtw6nrvL9y4J8JcRHbny
                     }
                 });
 
