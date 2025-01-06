@@ -62,9 +62,9 @@
             files.forEach(file => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                    <td>${file.name}</td>
+                    <td>${file.key}</td>
                     <td>
-                        <button class="btn btn-danger btn-sm" onclick="deleteFile('${file.name}')">Delete</button>
+                        <button class="btn btn-danger btn-sm" onclick="deleteFile('${file.key}')">Delete</button>
                     </td>
                 `;
                 fileListElement.appendChild(row);
