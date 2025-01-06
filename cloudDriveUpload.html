@@ -73,7 +73,7 @@
 
         async function deleteFile(fileName) {
             try {
-                const response = await fetch(`${DELETE_URL}${encodeURIComponent(fileName)}`, {
+                const response = await fetch(`${DELETE_URL}/${encodeURIComponent(fileName)}`, {
                     method: 'DELETE',
                     headers: { 'X-Custom-Auth-Key': AUTH_SECRET_KEY },
                 });
