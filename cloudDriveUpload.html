@@ -96,7 +96,7 @@
             if (!confirmation) return;
 
             try {
-                const response = await fetch(`driveworker.kylecloudservices.com/?key=${fileKey}`, {
+                const response = await fetch(`driveworker.kylecloudservices.com/${fileKey}`, {
                     method: 'DELETE',
                     headers: { 'X-Custom-Auth-Key': AUTH_SECRET_KEY}
                 }); // Adjust your worker URL here
