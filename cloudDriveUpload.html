@@ -96,10 +96,8 @@
             if (!confirmation) return;
 
             try {
-                const response = await fetch(`driveworker.kylecloudservices.com/${fileKey}`, {
-                    method: 'DELETE',
-                    headers: { 'X-Custom-Auth-Key': AUTH_SECRET_KEY}
-                }); // Adjust your worker URL here
+                const response = await fetch(`driveworker.kylecloudservices.com/${fileKey}`, { method: 'DELETE'}); 
+                // Adjust your worker URL here
                 if (response.ok) {
                     alert('File deleted successfully');
                     fetchFileList(); // Refresh the file list after deletion
