@@ -149,8 +149,15 @@
                 showMessage('文件大小请小于 100 MB', 'danger');
                 return;
             }
+
             const originalFileName = file.name;
             const sanitizedFileName = sanitizeFileName(originalFileName); // Rename variable to avoid conflict
+
+
+            const fileKey = sanitizedFileName;
+
+            
+
             // const fileKey = sanitizedFileName;
 
             // Automatically use the file's name as the file key
@@ -159,16 +166,15 @@
             try {
                 // Fetch and validate the file name against the JSON list
                 const validFiles = await fetchValidationList();
-                console.log('Valid Files:', validFiles);
-                console.log('Sanitized File Key:', sanitizedFileName);
 
-                if (!validFiles.includes(sanitizedFileName)) {
-                    showMessage(`文件名 "${sanitizedFileName}" 已存在，请更改文件名`, 'danger');
+
+                if (!validFiles.includes(fileKey)) {
+                    showMessage(`文件名 "${fileKey}" 已存在，请更改文件名`, 'danger');
                     return;
                 }
 
                 // Proceed with file upload
-                const response = await fetch(`${workerURL}/${encodeURIComponent(sanitizedFileName)}`, {
+                const response = await fetch(`${workerURL}/${encodeURIComponent(fileKey)}`, {
                     method: 'PUT',
                     headers: {
                         'X-Custom-Auth-Key': '123',
@@ -181,7 +187,7 @@
                     throw new Error(await response.text());
                 }
 
-                showMessage(` "${sanitizedFileName}" 上传成功`);
+                showMessage(` "${fileKey}" 上传成功`);
             } catch (error) {
                 showMessage(`上传失败（不是你的问题） ${error.message}`, 'danger');
             }
