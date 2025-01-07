@@ -25,6 +25,10 @@
             return fileName.replace(/[^a-zA-Z0-9_\-\.]/g, '_');
         }
 
+        function truncateFileName(fileName) {
+            return fileName.substring(0, 6);
+        }
+
         async function fetchFileList() {
             try {
                 const response = await fetch(getListURL, {
@@ -151,9 +155,9 @@
 
             const originalFileName = file.name;
             const sanitizedFileName = sanitizeFileName(originalFileName); // Rename variable to avoid conflict
+            const truncatedFileName = truncateFileName(sanitizedFileName);
 
-
-            const fileKey = sanitizedFileName;
+            const fileKey = truncatedFileName;
 
             
 
