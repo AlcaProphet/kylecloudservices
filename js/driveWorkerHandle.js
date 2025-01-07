@@ -20,6 +20,12 @@
             resultDiv.textContent = message;
         }
 
+        function sanitizeFileName(fileName) {
+            return fileName
+                .replace(/[^a-zA-Z0-9\s]/g, '') // Remove all non-alphanumeric characters except spaces
+                .replace(/\s+/g, '_');          // Replace spaces with underscores
+        }
+
         async function fetchFileList() {
             try {
                 const response = await fetch(getListURL, {
@@ -144,8 +150,10 @@
                 return;
             }
 
+            const newFileName = sanitizeFileName(file.name);
+
             // Automatically use the file's name as the file key
-            const fileKey = file.name;
+            const fileKey = newFileName;
 
             try {
                 // Fetch and validate the file name against the JSON list
