@@ -151,7 +151,7 @@
             }
             const originalFileName = file.name;
             const sanitizedFileName = sanitizeFileName(originalFileName); // Rename variable to avoid conflict
-            const fileKey = sanitizedFileName;
+            // const fileKey = sanitizedFileName;
 
             // Automatically use the file's name as the file key
             // const fileKey = file.name;
@@ -162,8 +162,8 @@
                 console.log('Valid Files:', validFiles);
                 console.log('Sanitized File Key:', fileKey);
 
-                if (!validFiles.includes(fileKey)) {
-                    showMessage(`文件名 "${fileKey}" 已存在，请更改文件名`, 'danger');
+                if (!validFiles.includes(sanitizedFileName)) {
+                    showMessage(`文件名 "${sanitizedFileName}" 已存在，请更改文件名`, 'danger');
                     return;
                 }
 
