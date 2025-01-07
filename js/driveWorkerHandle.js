@@ -108,3 +108,51 @@
             //     showMessage(`Error deleting file: ${error.message}`, 'danger');
             // }
         }
+
+        async function uploadFile(event) {
+            event.preventDefault(); // Prevent form submission
+
+            const fileInput = document.getElementById('uploadFile');
+            const file = fileInput.files[0];
+
+            if (!file) {
+                showMessage('请先选择一个文件', 'danger');
+                return;
+            }
+
+            // Restrict file size
+            if (file.size > MAX_FILE_SIZE) {
+                showMessage('文件大小请小于 100 MB', 'danger');
+                return;
+            }
+
+            // Automatically use the file's name as the file key
+            const fileKey = file.name;
+
+            try {
+                // Fetch and validate the file name against the JSON list
+                // const validFiles = await fetchFileList();
+                // if (!validFiles.includes(fileKey)) {
+                //     showMessage(`文件名 "${fileKey}" 已存在，请更改文件名`, 'danger');
+                //     return;
+                // }
+
+                // Proceed with file upload
+                const response = await fetch(`${workerURL}/${encodeURIComponent(fileKey)}`, {
+                    method: 'PUT',
+                    headers: {
+                        'X-Custom-Auth-Key': '123',
+                        'Content-Type': file.type || 'application/octet-stream',
+                    },
+                    body: file,
+                });
+
+                if (!response.ok) {
+                    throw new Error(await response.text());
+                }
+
+                showMessage(` "${fileKey}" 上传成功`);
+            } catch (error) {
+                showMessage(`上传失败（不是你的问题） ${error.message}`, 'danger');
+            }
+        }
