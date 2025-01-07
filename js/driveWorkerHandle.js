@@ -150,8 +150,8 @@
                 return;
             }
             const originalFileName = file.name;
-            const sanitizeFileName = sanitizeFileName(originalFileName);
-            const fileKey = sanitizeFileName;
+            const sanitizedFileName = sanitizeFileName(originalFileName); // Rename variable to avoid conflict
+            const fileKey = sanitizedFileName;
 
             // Automatically use the file's name as the file key
             // const fileKey = file.name;
