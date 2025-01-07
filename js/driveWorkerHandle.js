@@ -22,7 +22,7 @@
 
         function sanitizeFileName(fileName) {
             return fileName
-                .replace(/[^a-zA-Z0-9\s]/g, '') // Remove all non-alphanumeric characters except spaces
+                .replace(/[^a-zA-Z0-9.\s]/g, '') // Remove all non-alphanumeric characters except spaces and dots
                 .replace(/\s+/g, '_');          // Replace spaces with underscores
         }
 
@@ -149,15 +149,17 @@
                 showMessage('文件大小请小于 100 MB', 'danger');
                 return;
             }
-
-            const newFileName = sanitizeFileName(file.name);
+            const originalFileName = file.name;
+            const sanitizeFileName = sanitizeFileName(originalFileName);
+            const fileKey = sanitizeFileName;
 
             // Automatically use the file's name as the file key
-            const fileKey = newFileName;
+            // const fileKey = file.name;
 
             try {
                 // Fetch and validate the file name against the JSON list
                 const validFiles = await fetchValidationList();
+
                 if (!validFiles.includes(fileKey)) {
                     showMessage(`文件名 "${fileKey}" 已存在，请更改文件名`, 'danger');
                     return;
