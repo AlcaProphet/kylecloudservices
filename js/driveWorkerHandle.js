@@ -163,15 +163,6 @@
             // const fileKey = file.name;
 
             try {
-                // Fetch and validate the file name against the JSON list
-                const validFiles = await fetchValidationList();
-
-
-                if (!validFiles.includes(fileKey)) {
-                    showMessage(`文件名 "${fileKey}" 已存在，请更改文件名`, 'danger');
-                    return;
-                }
-
                 // Proceed with file upload
                 const response = await fetch(`${workerURL}/${encodeURIComponent(fileKey)}`, {
                     method: 'PUT',
