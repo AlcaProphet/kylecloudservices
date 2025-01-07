@@ -159,6 +159,8 @@
             try {
                 // Fetch and validate the file name against the JSON list
                 const validFiles = await fetchValidationList();
+                console.log('Valid Files:', validFiles);
+                console.log('Sanitized File Key:', fileKey);
 
                 if (!validFiles.includes(fileKey)) {
                     showMessage(`文件名 "${fileKey}" 已存在，请更改文件名`, 'danger');
