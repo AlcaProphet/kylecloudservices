@@ -168,7 +168,7 @@
                 }
 
                 // Proceed with file upload
-                const response = await fetch(`${workerURL}/${encodeURIComponent(fileKey)}`, {
+                const response = await fetch(`${workerURL}/${encodeURIComponent(sanitizedFileName)}`, {
                     method: 'PUT',
                     headers: {
                         'X-Custom-Auth-Key': '123',
