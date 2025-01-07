@@ -38,6 +38,23 @@
             }
         }
 
+        async function fetchValidationList() {
+            try {
+                const response = await fetch(getListURL, {
+                    method: 'GET',
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch validation JSON: ${response.statusText}`);
+                }
+                
+                return await response.json();
+            } catch (error) {
+                showMessage(`获取文件列表失败（不是你的问题）: ${error.message}`, 'danger');
+                throw error;
+            }
+        }
+
         // function displayFileList(files) {
         //     fileListElement.innerHTML = ''; // Clear the table
         //     files.forEach(file => {
@@ -132,11 +149,11 @@
 
             try {
                 // Fetch and validate the file name against the JSON list
-                // const validFiles = await fetchFileList();
-                // if (!validFiles.includes(fileKey)) {
-                //     showMessage(`文件名 "${fileKey}" 已存在，请更改文件名`, 'danger');
-                //     return;
-                // }
+                const validFiles = await fetchValidationList();
+                if (!validFiles.includes(fileKey)) {
+                    showMessage(`文件名 "${fileKey}" 已存在，请更改文件名`, 'danger');
+                    return;
+                }
 
                 // Proceed with file upload
                 const response = await fetch(`${workerURL}/${encodeURIComponent(fileKey)}`, {
