@@ -160,7 +160,7 @@
                 // Fetch and validate the file name against the JSON list
                 const validFiles = await fetchValidationList();
                 console.log('Valid Files:', validFiles);
-                console.log('Sanitized File Key:', fileKey);
+                console.log('Sanitized File Key:', sanitizedFileName);
 
                 if (!validFiles.includes(sanitizedFileName)) {
                     showMessage(`文件名 "${sanitizedFileName}" 已存在，请更改文件名`, 'danger');
@@ -181,7 +181,7 @@
                     throw new Error(await response.text());
                 }
 
-                showMessage(` "${fileKey}" 上传成功`);
+                showMessage(` "${sanitizedFileName}" 上传成功`);
             } catch (error) {
                 showMessage(`上传失败（不是你的问题） ${error.message}`, 'danger');
             }
