@@ -185,3 +185,19 @@
                 showMessage(`上传失败（不是你的问题） ${error.message}`, 'danger');
             }
         }
+
+        async function downloadFile(fileKey) {
+            try {
+                const response = await fetch(`driveworker.kylecloudservices.com/${fileKey}`, {
+                     method: 'GET' 
+                    }); // Adjust your worker URL here
+                const fileBlob = await response.blob();
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(fileBlob);
+                link.download = fileKey;
+                link.click();
+            } catch (error) {
+                console.error('Error downloading file:', error);
+                alert('UPLODE ERR.');
+            }
+        }
