@@ -1,4 +1,4 @@
-        // URLs for the Worker
+// URLs for the Worker
         // const LIST_URL = 'https://drivequerylist.kylecloudservices.com'; // Replace with the Worker URL for listing files
         const getListURL = 'https://drivequerylist.kylecloudservices.com'; // Replace with the Worker URL for listing files
         // const DELETE_URL = 'https://driveworker.kylecloudservices.com'; // Replace with the Worker URL for deleting files
@@ -21,9 +21,8 @@
         }
 
         function sanitizeFileName(fileName) {
-            return fileName
-                .replace(/[^a-zA-Z0-9.\s]/g, '') // Remove all non-alphanumeric characters except spaces and dots
-                .replace(/\s+/g, '_');          // Replace spaces with underscores
+            // 移除文件名中的无效字符
+            return fileName.replace(/[^a-zA-Z0-9_\-\.]/g, '_');
         }
 
         async function fetchFileList() {
