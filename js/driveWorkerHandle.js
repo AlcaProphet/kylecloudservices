@@ -6,6 +6,7 @@
         // const AUTH_SECRET_KEY = ''; // Replace with your secret key
         const fileListElement = document.getElementById('fileList');
         const resultDiv = document.getElementById('result');
+        const MAX_FILE_SIZE = 100 * 1024 * 1024; // 100 MB
 
         function showMessage(message, type = 'success') {
             resultDiv.style.display = 'block';
