@@ -177,7 +177,10 @@
                     throw new Error(await response.text());
                 }
 
-                showMessage(` "${fileKey}" 上传成功`);
+                showMessage(` "${fileKey}" 上传成功，页面3秒后刷新。`);
+                setTimeout(() => {
+                    location.reload();
+                }, 3000); // 1-second delay for user to read the success message
             } catch (error) {
                 showMessage(`上传失败（不是你的问题） ${error.message}`, 'danger');
             }
