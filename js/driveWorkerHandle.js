@@ -80,6 +80,7 @@
             try {
                 const response = await fetch(`${workerURL}/${encodeURIComponent(fileName)}`, {
                     method: 'DELETE',
+                    headers: { 'X-Custom-Auth-Key': 123}，
                 });
 
                 if (!response.ok) {
