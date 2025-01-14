@@ -79,19 +79,21 @@
             files.forEach(file => {
                 const card = document.createElement('div');
                 card.className = 'card mb-1';
-                card.style = 'Padding: 1rem';
+                card.style = 'Padding: 0.5rem';
                 card.innerHTML = `
                     <div class="row justify-content-between align-items-center">
-                        <div class="col-6">
-                            <p class="card-text">${file.key}</p>
+                        <div class="col-8">
+                            <p class="card-text mb-1">${file.key}</p>
+                            <p class="card-text mb-1">大小：${convertBits(file.size)}</p>
+                            <p class="card-text mb-1">上传时间：${new Date(file.lastModified).toLocaleString()}</p>
                         </div>
-                        <div class="col-6">
+                        <div class="col-4">
                             <div class="row justify-content-center">
-                                <button type="button" class="btn btn-sm btn-outline-primary mb-1 col-5" onclick="downloadFile('${file.key}')">下载</button>
+                                <button type="button" class="btn btn-sm btn-outline-primary mb-1 mt-1 col-5" onclick="downloadFile('${file.key}')">下载</button>
                                 <div class="w-100"></div>
                                 <button type="button" class="btn btn-sm btn-outline-success mb-1 col-5" onclick="downloadFile('${file.key}')">分享</button>
                                 <div class="w-100"></div>
-                                <button type="button" class="btn btn-sm btn-outline-danger mb-1 col-5" onclick="deleteFile('${file.key}')">删除</button>                                </div>
+                                <button type="button" class="btn btn-sm btn-outline-danger mb-1 col-5" onclick="deleteFile('${file.key}')">删除</button> 
                             </div>
                         </div>
                     </div>
@@ -110,7 +112,8 @@
                 card.innerHTML = `
                     <div class="row justify-content-start align-items-center">
                         <div class="col-8">
-                            <p class="card-text mb-1">${file.key}，大小：${convertBits(file.size)}，上传时间：${new Date(file.lastModified).toLocaleString()}</p>
+                            <p class="card-text mb-1">${file.key}</p>
+                            <p class="card-text mb-1">大小：${convertBits(file.size)}，上传时间：${new Date(file.lastModified).toLocaleString()}</p>
                         </div>
                         <div class="col-4">
                             <button class="btn btn-outline-primary col mb-1" onclick="downloadFile('${file.key}')">下载</button>
