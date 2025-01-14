@@ -78,8 +78,10 @@
             cardBody.innerHTML = ''; // Clear any existing rows
             files.forEach(file => {
                 const card = document.createElement('div');
-                card.className = 'card-body row justify-content-between';
+                card.className = 'card mb-1';
+                card.style = 'Padding: 1rem';
                 card.innerHTML = `
+                    <div class="row justify-content-between align-items-center">
                         <div class="col-6">
                             <p class="card-text">${file.key}</p>
                         </div>
@@ -92,6 +94,7 @@
                                 <button type="button" class="btn btn-sm btn-outline-danger mb-1 col-5" onclick="deleteFile('${file.key}')">删除</button>                                </div>
                             </div>
                         </div>
+                    </div>
                 `;
                 cardBody.appendChild(card);
             });
@@ -102,16 +105,19 @@
             cardBody.innerHTML = ''; // Clear any existing rows
             files.forEach(file => {
                 const card = document.createElement('div');
-                card.className = 'card-body row align-items-center';
+                card.className = 'card mb-1';
+                card.style = 'Padding: 1rem';
                 card.innerHTML = `
+                    <div class="row justify-content-start align-items-center">
                         <div class="col-8">
-                            <p class="card-text">${file.key}，大小：${convertBits(file.size)}，上传时间：${new Date(file.lastModified).toLocaleString()}</p>
+                            <p class="card-text mb-1">${file.key}，大小：${convertBits(file.size)}，上传时间：${new Date(file.lastModified).toLocaleString()}</p>
                         </div>
                         <div class="col-4">
-                            <button class="btn btn-outline-primary mb-1 col" onclick="downloadFile('${file.key}')">下载</button>
-                            <button class="btn btn-outline-success mb-1 col" onclick="downloadFile('${file.key}')">分享</button>
-                            <button class="btn btn-outline-danger mb-1 col" onclick="deleteFile('${file.key}')">删除</button>
+                            <button class="btn btn-outline-primary col mb-1" onclick="downloadFile('${file.key}')">下载</button>
+                            <button class="btn btn-outline-success col mb-1" onclick="downloadFile('${file.key}')">分享</button>
+                            <button class="btn btn-outline-danger col mb-1" onclick="deleteFile('${file.key}')">删除</button>
                         </div>
+                    </div>
                 `;
                 cardBody.appendChild(card);
             });
