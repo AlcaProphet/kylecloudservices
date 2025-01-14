@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="cn">
+
+<head>
+    <!-- Basic -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KCS - 文件中转</title>
+    <!-- Custom CSS -->
+
+    <!-- Third-Party CSS -->
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="./images/favicon.png" type="image/x-icon">
+</head>
+
+<body style="background-color: #F5F3EB !important;">
+
+    <div class="container my-5">
+        <div class="p-5 text-center bg-body-tertiary rounded-3 text-success-emphasis bg-success-subtle border border-success-subtle">
+            <h1 class="mt-1 text-body-emphasis">临时文件中转</h1>
+            <h2 class="mt-1 text-body-emphasis">🚧 试运行中，可能存在意外错误 🚧</h2>
+            <p class="col-lg-8 mx-auto fs-5 text-muted">
+                所有文件请自行备份，存放一段时间后会被自动删除，此处不作为永久云盘使用。
+            </p>
+            <p class="col-lg-8 mx-auto fs-5 text-muted">
+                所有内容均可被任何人访问、下载和删除，请勿存放任何敏感内容。
+            </p>
+            <p class="col-lg-8 mx-auto fs-5 text-muted">
+                文件可能会被重命名，大小限制 100MB 以内，重复的文件名会被覆盖。
+            </p>
+            <form id="uploadForm">
+                <div class="mb-3">
+                    <input type="file" class="form-control" id="uploadFile" required>
+                </div>
+                <button type="submit" class="btn btn-primary">上传文件</button>
+            </form>
+        </div>
+
+        <div class="b-example-divider mt-2 mb-2"></div>
+        <div id="result" class="alert alert-secondary" role="alert" style="display: none;"></div>
+
+        <div class="p-5 bg-body-tertiary rounded-3 text-warning-emphasis bg-warning-subtle border border-warning-subtle mb-2">
+            <div class="card mb-2 text-center d-md-none" id="fileCardContainerSmall">
+                <div>
+                    <!-- File list small will be populated here -->
+                </div>
+            </div>
+            <div class="card mb-2 text-center d-none d-md-block" id="fileCardContainerLarge">
+                <div>
+                    <!-- File list large will be populated here -->
+                </div>
+            </div>
+        </div>
+
+</body>
+<script type="text/javascript" src="./js/driveWorkerHandleNew.js"></script>
+<script type="text/javascript" src="./js/bootstrap.bundle.min.js"></script>
+<script>
+    // Fetch the file list on page load
+    fetchFileList();
+    uploadForm.addEventListener('submit', uploadFile);
+</script>
+</body>
+
+</html>
